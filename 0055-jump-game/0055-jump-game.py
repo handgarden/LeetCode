@@ -6,14 +6,12 @@
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
         maxIndex = 0;
-        for i in range(len(nums) - 1):
+        LAST_INDEX = len(nums) - 1
+        for i in range(LAST_INDEX) :
             curJump = i + nums[i]
-            if nums[i] == 0 and maxIndex <= i:
-                return False
-            if curJump >= len(nums) - 1 :
-                return True
-            if maxIndex < curJump:
-                maxIndex = curJump
+            if (nums[i] == 0 and maxIndex <= i) or maxIndex >= LAST_INDEX:
+                break
+            maxIndex = max(maxIndex, curJump)
         
-        return maxIndex >= len(nums) - 1
+        return maxIndex >= LAST_INDEX
         
