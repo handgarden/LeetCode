@@ -1,14 +1,24 @@
 class Solution:
     def jump(self, nums: List[int]) -> int:
-        ARR_LEN = len(nums)
-        if ARR_LEN == 1: 
-            return 0
-        dp = [0 for i in range(ARR_LEN)]
-        for i in range(ARR_LEN):
-            jump = nums[i]
-            for j in range(1, jump+1):
-                index = min(i+j, ARR_LEN - 1)
-                dp[index] = min(dp[i] + 1, dp[index]) if dp[index] != 0 else dp[i] + 1
-        return dp[ARR_LEN - 1]
+        visited = [False] * len(nums)
+        que = deque()
+        que.append(0)
+        level = 0
+        size = 1    
+        while que:
+            newSize = 0
+            for j in range(size):
+                cur = que.popleft()
+                if cur >= len(nums) - 1:
+                    return level
+                jump = nums[cur]
+                for i in range(cur + 1, min(cur + 1 + jump, len(nums))):
+                    if not visited[i]:
+                        visited[i] = True
+                        que.append(i)
+                        newSize+=1
+            size = newSize
+            level+=1
+        return level
 
             
