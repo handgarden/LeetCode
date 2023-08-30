@@ -1,3 +1,20 @@
+function createDirection(ij:[number,number],leny:number, lenx:number){
+    const arr = [];
+    if(ij[0] - 1 >= 0){
+        arr.push([ij[0] - 1, ij[1]]);
+    }
+    if(ij[0] + 1 < leny){
+        arr.push([ij[0] + 1, ij[1]])
+    }
+    if(ij[1] - 1 >= 0){
+        arr.push([ij[0], ij[1] - 1])
+    }
+    if(ij[1] + 1 <lenx){
+        arr.push([ij[0], ij[1] + 1]);
+    }
+    return arr;
+}
+
 function bfs(grid:string[][], i:number, j:number, visited:boolean[][]){
     const que:[number,number][] = [];
     que.push([i,j]);
@@ -5,30 +22,12 @@ function bfs(grid:string[][], i:number, j:number, visited:boolean[][]){
     while(que.length){
         const ij = que.pop();
         // console.log(visited);
-        const i = ij[0];
-        const j = ij[1];
-        if(i - 1 >= 0){
-            if(grid[i - 1][j] === '1' && !visited[i - 1][j]){
-                visited[i - 1][j] = true;
-                que.push([i-1,j]);
-            }
-        }
-        if(i + 1 < grid.length){
-            if(grid[i+1][j] === '1' && !visited[i+1][j]){
-                visited[i+1][j] = true;
-                que.push([i+1,j]);
-            }
-        }
-        if(j - 1 >= 0){
-            if(grid[i][j-1] === '1' && !visited[i][j- 1]){
-                visited[i][j-1] = true;
-                que.push([i,j-1]);
-            }
-        }
-        if(j + 1 < grid[0].length){
-            if(grid[i][j + 1] === '1' && !visited[i][j+ 1]){
-                visited[i][j+1] = true;
-                que.push([i,j+1]);
+        const direct = createDirection(ij, grid.length, grid[0].length);
+        for(let i = 0; i<direct.length; i++){
+            const d = direct[i];
+            if(grid[d[0]][d[1]] === '1' && !visited[d[0]][d[1]]){
+                visited[d[0]][d[1]] = true;
+                que.push([d[0],d[1]]);
             }
         }
     }
@@ -56,7 +55,6 @@ function numIslands(grid: string[][]): number {
             // console.log(i,j,visited[i][j],grid[i][j]);
             if(!visited[i][j] && grid[i][j] === '1'){
                 count++;
-                // console.log(count);
                 bfs(grid, i,j,visited)
             }
         }
