@@ -18,6 +18,7 @@ function createDirection(ij:[number,number],leny:number, lenx:number){
 function bfs(grid:string[][], i:number, j:number, visited:boolean[][]){
     const que:[number,number][] = [];
     que.push([i,j]);
+    visited[i][j] = true;
     while(que.length){
         const ij = que.pop();
         // console.log(visited);
