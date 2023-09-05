@@ -18,17 +18,9 @@ class Solution {
         $result = [];
         for($i = 0; $i<$len;$i++){
             $tmp = (int)$str1[$i] + (int)$str2[$i] + $remain;
-            print "i={$i}";
-            print "\n";
-            print "tmp={$tmp}";
-            print "\n";
             $result[$i] = $tmp % 2;
-            print "result={$result[$i]}";
-            print "\n";
             $remain = max([0, $tmp / 2]);
             $remain = (int) floor($remain);
-            print "remain=$remain";
-            print "\n";
             
         }
         
@@ -40,7 +32,6 @@ class Solution {
             
         }
         
-        print_r($result);
         for($i = $len; $i < count($str2); $i++){
             $tmp = (int)$str2[$i] + $remain;
             $result[$i] = $tmp % 2;
@@ -56,7 +47,6 @@ class Solution {
             $remain = (int) floor($remain);
             
         }
-        print_r($result);
         return strrev(implode($result));
     }
 }
