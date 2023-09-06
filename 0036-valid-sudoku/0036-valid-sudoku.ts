@@ -15,7 +15,7 @@ function isValidSudoku(board: string[][]): boolean {
             let num2 = parseInt(board[j][i]);
             if(!isNaN(num)){
                 if(visited[num]){
-                    console.log(1,i,j,num, visited[num ? num:0]);
+                    // console.log(1,i,j,num, visited[num ? num:0]);
                     return false;   
                 }
                 visited[num] = true;
@@ -23,7 +23,7 @@ function isValidSudoku(board: string[][]): boolean {
             }
             if(!isNaN(num2)){
                 if(visited2[num2]){
-                    console.log(2,j,i,num2, visited2[num2 ? num2:0]);
+                    // console.log(2,j,i,num2, visited2[num2 ? num2:0]);
                     return false;   
                 }
                 visited2[num2] = true;
@@ -44,7 +44,7 @@ function isValidSudoku(board: string[][]): boolean {
                     let num = parseInt(board[t][k]);
                     if(!isNaN(num)){
                         if(visited[num]){
-                            console.log(3,t,k, num, visited[num ? num:0]);
+                            // console.log(3,t,k, num, visited[num ? num:0]);
                             return false;
                         }
                         visited[num] = true;
