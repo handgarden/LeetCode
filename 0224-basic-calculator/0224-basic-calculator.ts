@@ -1,23 +1,24 @@
 function calculate(s: string): number {
-    const splitStr = s.replaceAll(' ', '').split('');
-    
     const parsedStr = [];
     let spCount = 0;
-    for(let i = 0; i<splitStr.length; i++){
-        if(splitStr[i] === '-' || splitStr[i] === '+' || splitStr[i] === '(' || splitStr[i] === ')'){
+    for(let i = 0; i<s.length; i++){
+        if(s[i] === ' '){
+            continue;
+        }
+        if(s[i] === '-' || s[i] === '+' || s[i] === '(' || s[i] === ')'){
             spCount++;
         }
-        if(!isNaN(parseInt(splitStr[i]))){
-            let str = splitStr[i];
+        if(!isNaN(parseInt(s[i]))){
+            let str = s[i];
             let j = i+1;
-            while(j < splitStr.length && splitStr[j] <= '9' && splitStr[j]>='0'){
-                str = `${str}${splitStr[j]}`;
+            while(j < s.length && s[j] <= '9' && s[j]>='0'){
+                str = `${str}${s[j]}`;
                 i=j++;
             }
             parsedStr.push(str);
             continue;
         }
-        parsedStr.push(splitStr[i]);
+        parsedStr.push(s[i]);
     }
     
     if(!spCount){
@@ -30,14 +31,12 @@ function calculate(s: string): number {
     
     for(let i = 0; i<parsedStr.length;i++){
         const s = parsedStr[i];
-        // console.log(stack, 's',s);
+       
         if(s==='+'){
             continue;
         }
-        // console.log(s);
         if(s === ')'){
             const tmp = [];
-            console.log('test',stack);
              while(stack.length && stack[stack.length - 1] !== '('){
                  tmp.push(stack.pop());
              }
@@ -51,7 +50,6 @@ function calculate(s: string): number {
                     continue;
                 }
                 result+= pos * parseInt(elem);
-                // console.log('result',result);
                 pos = 1;
             }
             
@@ -64,6 +62,7 @@ function calculate(s: string): number {
     }
     
     const parsedStack = [];
+    console.log(stack);
     let result = 0;
     for(let i = 0; i<stack.length;i++){
         if(stack[i] !== '-'){
