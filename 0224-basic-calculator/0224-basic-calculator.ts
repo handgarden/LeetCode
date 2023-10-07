@@ -21,7 +21,7 @@ function calculate(s: string): number {
     }
     
     if(!spCount){
-        const str = splitStr.join('');
+        const str = parsedStr.join('');
 
         return parseInt(str);
     }
@@ -82,7 +82,6 @@ function calculate(s: string): number {
         
         result += parseInt(stack[++i]) * -1;
     }
-    
 
     return result;
 };
