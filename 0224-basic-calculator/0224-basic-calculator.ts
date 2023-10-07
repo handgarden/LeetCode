@@ -63,11 +63,11 @@ function calculate(s: string): number {
         stack.push(s);
     }
     
-    // console.log(stack);
     const parsedStack = [];
+    let result = 0;
     for(let i = 0; i<stack.length;i++){
         if(stack[i] !== '-'){
-            parsedStack.push(stack[i]);
+            result+=parseInt(stack[i]);
             continue;
         }
         
@@ -80,16 +80,9 @@ function calculate(s: string): number {
             continue;
         }
         
-        const num = parseInt(stack[++i]) * -1;
-        parsedStack.push(num.toString());
+        result += parseInt(stack[++i]) * -1;
     }
     
-    // console.log(parsedStack);
 
-    let result = 0;
-    parsedStack.forEach(s=>{
-        result+=parseInt(s);
-    });
-    // console.log(result);
     return result;
 };
