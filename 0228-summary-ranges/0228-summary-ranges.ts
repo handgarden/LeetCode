@@ -19,7 +19,6 @@ function summaryRanges(nums: number[]): string[] {
     
     
     let result: string[] = [];
-    console.log(map.keys());
     for(let key of map.keys()){
         const val = map.get(key);
         if(val === key){
