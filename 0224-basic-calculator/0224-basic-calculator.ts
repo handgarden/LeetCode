@@ -1,15 +1,12 @@
 function calculate(s: string): number {
     const splitStr = s.replaceAll(' ', '').split('');
     
-    if(!splitStr.includes('-') && !splitStr.includes('+') && !splitStr.includes('(') && !splitStr.includes(')')){
-        const str = splitStr.join('');
-
-        return parseInt(str);
-    }
-    
-    
     const parsedStr = [];
+    let spCount = 0;
     for(let i = 0; i<splitStr.length; i++){
+        if(splitStr[i] === '-' || splitStr[i] === '+' || splitStr[i] === '(' || splitStr[i] === ')'){
+            spCount++;
+        }
         if(!isNaN(parseInt(splitStr[i]))){
             let str = splitStr[i];
             let j = i+1;
@@ -23,7 +20,11 @@ function calculate(s: string): number {
         parsedStr.push(splitStr[i]);
     }
     
-    // console.log('parsed',parsedStr);
+    if(!spCount){
+        const str = splitStr.join('');
+
+        return parseInt(str);
+    }
     
     const stack = [];
     
