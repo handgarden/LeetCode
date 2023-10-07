@@ -5,8 +5,7 @@ class MinStack {
         if(this.stack.length < 1){
             this.stack.push([val,val]);
         }else{
-            const lastIndex = this.stack.length - 1;
-            const min = this.stack[lastIndex][1];
+            const min = this.stack[this.stack.length - 1][1];
             this.stack.push([val, Math.min(val, min)]);
         }
     }
@@ -16,14 +15,11 @@ class MinStack {
     }
 
     top(): number {
-        const lastIndex = this.stack.length - 1;
-        
-        return this.stack[lastIndex][0];
+        return this.stack[this.stack.length - 1][0];
     }
 
     getMin(): number {
-        const lastIndex = this.stack.length - 1;
-        return this.stack[lastIndex][1];
+        return this.stack[this.stack.length - 1][1];
     }
 }
 
