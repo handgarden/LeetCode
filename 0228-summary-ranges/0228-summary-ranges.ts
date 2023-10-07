@@ -19,13 +19,8 @@ function summaryRanges(nums: number[]): string[] {
     
     
     let result: string[] = [];
-    for(let key of map.keys()){
-        const val = map.get(key);
-        if(val === key){
-            result.push(key.toString());
-        }else{
-            result.push(`${key}->${val}`);
-        }
+    for(let e of map.entries()){
+        e[0] === e[1] ? result.push(e[0].toString()) : result.push(`${e[0]}->${e[1]}`);
     }
     return result;
     
