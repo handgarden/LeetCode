@@ -61,7 +61,6 @@ function calculate(s: string): number {
         stack.push(s);
     }
     
-    const parsedStack = [];
     let result = 0;
     for(let i = 0; i<stack.length;i++){
         if(stack[i] !== '-'){
