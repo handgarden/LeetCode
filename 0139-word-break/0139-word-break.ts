@@ -1,7 +1,7 @@
 function wordBreak(s: string, wordDict: string[]): boolean {
-    if(s.length < 2){
-        return s.length && wordDict.includes(s[0]);
-    }
+    // if(s.length < 2){
+    //     return s.length && wordDict.includes(s[0]);
+    // }
     const dp:boolean[] = [];
     for(let i = 0; i<s.length; i++){
         dp[i] = false;
