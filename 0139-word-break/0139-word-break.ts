@@ -5,10 +5,8 @@ function wordBreak(s: string, wordDict: string[]): boolean {
         for(let j = i ; j>=0; j--){
             const tmp = s.substring(j,i+1);
             if(wordDict.includes(tmp)){
-                if(j===0){
+                if(j===0 || !!dp[j-1]){
                     dp[i] = true;
-                }else if(j > 0 && dp[j-1]){
-                    dp[i] = true;   
                 }
             }
         }
