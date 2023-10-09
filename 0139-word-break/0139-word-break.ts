@@ -1,22 +1,15 @@
 function wordBreak(s: string, wordDict: string[]): boolean {
-    // if(s.length < 2){
-    //     return s.length && wordDict.includes(s[0]);
-    // }
     const dp:boolean[] = [];
     for(let i = 0; i<s.length; i++){
         dp[i] = false;
         for(let j = i ; j>=0; j--){
             const tmp = s.substring(j,i+1);
             if(wordDict.includes(tmp)){
-                // console.log(tmp, s.substring(0,j));
-                if(j===0){
+                if(j===0 || (j > 0 && dp[j-1])){
                     dp[i] = true;
-                }else if(j > 0 && dp[j-1]){
-                    dp[i] = true;   
                 }
             }
         }
-        // console.log(dp);
     }
     
     return dp[s.length-1];
