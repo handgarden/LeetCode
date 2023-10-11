@@ -2,7 +2,8 @@ function canCompleteCircuit(gas: number[], cost: number[]): number {
     let sum = 0;
     let curSum = 0;
     let start = 0;
-    for(let i = 0; i<gas.length;i++){
+    let len = gas.length;
+    for(let i = 0; i < len;i++){
         const diff = gas[i] - cost[i];
         sum+=diff;
         curSum+=diff;
@@ -12,5 +13,5 @@ function canCompleteCircuit(gas: number[], cost: number[]): number {
         }
     }
     
-    return sum < 0 ? -1 : start % gas.length;
+    return sum < 0 ? -1 : start % len;
 };
