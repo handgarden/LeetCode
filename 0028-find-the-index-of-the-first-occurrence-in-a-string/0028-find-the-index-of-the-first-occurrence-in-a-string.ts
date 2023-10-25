@@ -5,12 +5,8 @@ function strStr(haystack: string, needle: string): number {
     
     for(let i = 0; i<=haystack.length - needle.length; i++){
         let count = 0;
-        for(let j = 0; j<needle.length;j++){
-            if(haystack[i+j] === needle[j]){
-                count++;
-            }
-        }
-        if(count === needle.length){
+        let sub = haystack.slice(i, i+needle.length);
+        if(sub === needle){
             return i;
         }
     }
