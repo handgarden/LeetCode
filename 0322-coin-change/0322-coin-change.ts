@@ -3,31 +3,19 @@ function coinChange(coins: number[], amount: number): number {
         return 0;
     }
     
-    const arr = new Array(amount+1);
-    arr[0] = 0;
-    coins.forEach(c=>{
-        let i = 1;
-        while(c * i <= amount){
-            const curAmount = c * i;
-            if(!arr[curAmount] || arr[curAmount] > i){
-                arr[curAmount] = i;
-            }
-            
-            for(let j = 1; j+curAmount <= amount; j++){
-                if(!arr[j]){
-                    continue;
-                }
-                
-                const prevCount = arr[j+curAmount];
-                if(!prevCount || prevCount > arr[j] + i){
-                    arr[j+curAmount] = arr[j] + i;
-                }
-            }
-            
-            
-            i++;
-        }
-    })
+    const dp = new Array(amount+1);
+    dp[0] = 0;
     
-    return arr[amount] || -1;
+    for(let i = 1; i<=amount;i++){
+        dp[i] = Number.MAX_SAFE_INTEGER;
+        for(let j = 0; j<coins.length;j++){
+            if(i - coins[j] < 0){
+                continue;
+            }
+            dp[i] = Math.min(dp[i], dp[i-coins[j]] + 1);
+        }
+        // console.log(i,dp[i]);
+    }
+    
+    return dp[amount] === Number.MAX_SAFE_INTEGER ? -1 : dp[amount];
 };
