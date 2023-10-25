@@ -3,27 +3,24 @@ function coinChange(coins: number[], amount: number): number {
         return 0;
     }
     
-    const map = new Map<number, number>();
-    map.set(0,0);
+    const arr = new Array(amount+1);
+    arr[0] = 0;
     coins.forEach(c=>{
         let i = 1;
         while(c * i <= amount){
             const curAmount = c * i;
-            let prevCount = map.get(curAmount);
-            if(!prevCount || prevCount > i){
-                map.set(curAmount, i);
-                prevCount = i;
+            if(!arr[curAmount] || arr[curAmount] > i){
+                arr[curAmount] = i;
             }
             
             for(let j = 1; j+curAmount <= amount; j++){
-                const diffCount = map.get(j);
-                if(!diffCount){
+                if(!arr[j]){
                     continue;
                 }
                 
-                const prevCount = map.get(j+curAmount);
-                if(!prevCount || prevCount > diffCount + i){
-                    map.set(j+curAmount, diffCount+i);
+                const prevCount = arr[j+curAmount];
+                if(!prevCount || prevCount > arr[j] + i){
+                    arr[j+curAmount] = arr[j] + i;
                 }
             }
             
@@ -32,6 +29,5 @@ function coinChange(coins: number[], amount: number): number {
         }
     })
     
-    const result = map.get(amount);
-    return result || -1;
+    return arr[amount] || -1;
 };
