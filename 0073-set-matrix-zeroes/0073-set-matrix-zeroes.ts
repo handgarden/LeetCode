@@ -1,52 +1,40 @@
 /**
  Do not return anything, modify matrix in-place instead.
  */
-class Index {
-    x: number;
-    y: number;
-    constructor(x:number, y: number){
-        this.x = x;
-        this.y = y;
-    }
-
-}
 
 class Virus {
-    index: Index;
-    matrix: number[][];
-
-    constructor(index: Index, matrix: number[][]){
-        this.index = index;
-        this.matrix = matrix;
+    static infectX(x: number, matrix: number[][]){
+        
+        for(let i = 0; i<matrix.length; i++){
+            matrix[i][x] = 0;
+        }
     }
 
-    infect(){
-        const x = this.index.x;
-        const y = this.index.y;
-        
-        for(let i = 0; i<this.matrix[0].length; i++){
-            this.matrix[y][i] = 0;
-        }
-        
-        for(let i = 0; i<this.matrix.length;i++){
-            this.matrix[i][x] = 0;
+    static infectY(y: number, matrix: number[][]){
+        for(let i = 0; i<matrix[0].length; i++){
+            matrix[y][i] = 0;
         }
     }
 }
 
+
 function setZeroes(matrix: number[][]): void {
-    const virusQue: Virus[] = [];
+    const VirusXMap = new Map<number, number>();
+    const VirusYMap = new Map<number, number>();
     
     for(let i = 0; i<matrix.length; i++){
         for(let j = 0; j<matrix[0].length; j++){
             if(!matrix[i][j]){
-                virusQue.push(new Virus(new Index(j,i), matrix));
+                if(!VirusXMap.has(j)){
+                    VirusXMap.set(j,j);
+                }
+                if(!VirusYMap.has(i)){
+                    VirusYMap.set(i,i);
+                }
             }
         }
     }
     
-    while(virusQue.length){
-        const virus = virusQue.pop();
-        virus.infect();
-    }
+    [...VirusXMap.values()].forEach(x => Virus.infectX(x, matrix));
+    [...VirusYMap.values()].forEach(y => Virus.infectY(y, matrix));
 };
