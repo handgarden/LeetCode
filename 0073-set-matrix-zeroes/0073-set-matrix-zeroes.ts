@@ -34,7 +34,11 @@ function setZeroes(matrix: number[][]): void {
             }
         }
     }
+    for(const x of VirusXMap.values()){
+        Virus.infectX(x, matrix);
+    }
+    for(const y of VirusYMap.values()){
+        Virus.infectY(y, matrix);
+    }
     
-    [...VirusXMap.values()].forEach(x => Virus.infectX(x, matrix));
-    [...VirusYMap.values()].forEach(y => Virus.infectY(y, matrix));
 };
