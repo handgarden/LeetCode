@@ -19,26 +19,22 @@ class Virus {
 
 
 function setZeroes(matrix: number[][]): void {
-    const VirusXMap = new Map<number, number>();
-    const VirusYMap = new Map<number, number>();
+    const VirusXSet = new Set<number>();
+    const VirusYSet = new Set<number>();
     
     for(let i = 0; i<matrix.length; i++){
         for(let j = 0; j<matrix[0].length; j++){
             if(!matrix[i][j]){
-                if(!VirusXMap.has(j)){
-                    VirusXMap.set(j,j);
-                }
-                if(!VirusYMap.has(i)){
-                    VirusYMap.set(i,i);
-                }
+                VirusXSet.add(j);
+                VirusYSet.add(i);
             }
         }
     }
     const virus = new Virus();
-    for(const x of VirusXMap.values()){
+    for(const x of VirusXSet.values()){
         virus.infectX(x, matrix);
     }
-    for(const y of VirusYMap.values()){
+    for(const y of VirusYSet.values()){
         virus.infectY(y, matrix);
     }
     
