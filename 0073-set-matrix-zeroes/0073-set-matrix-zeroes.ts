@@ -3,14 +3,14 @@
  */
 
 class Virus {
-    static infectX(x: number, matrix: number[][]){
+    infectX(x: number, matrix: number[][]){
         
         for(let i = 0; i<matrix.length; i++){
             matrix[i][x] = 0;
         }
     }
 
-    static infectY(y: number, matrix: number[][]){
+    infectY(y: number, matrix: number[][]){
         for(let i = 0; i<matrix[0].length; i++){
             matrix[y][i] = 0;
         }
@@ -34,11 +34,12 @@ function setZeroes(matrix: number[][]): void {
             }
         }
     }
+    const virus = new Virus();
     for(const x of VirusXMap.values()){
-        Virus.infectX(x, matrix);
+        virus.infectX(x, matrix);
     }
     for(const y of VirusYMap.values()){
-        Virus.infectY(y, matrix);
+        virus.infectY(y, matrix);
     }
     
 };
