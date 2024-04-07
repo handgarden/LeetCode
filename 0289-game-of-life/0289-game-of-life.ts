@@ -69,27 +69,20 @@ class Board {
         const adjs = this.adjecent.getAdj(index.x, index.y);
         if(this.matrix[index.y][index.x]){
             if(this.firstRule(adjs)){
-                console.log(index, 'first')
                 return 0;
             }
             if(this.secondRule(adjs)){
-                
-                console.log(index, 'second')
                 return 1;
             }
             if(this.thirdRule(adjs)){
-                
-                console.log(index, 'third')
                 return 0;
             }
         }else{
             if(this.forthRule(adjs)){
-                console.log(index, 'forth')
                 return 1;
             }
         }
         
-        console.log(index, 'no')
         return this.matrix[index.y][index.x];
         
     }
