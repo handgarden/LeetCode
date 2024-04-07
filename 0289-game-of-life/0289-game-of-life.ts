@@ -2,7 +2,7 @@
  Do not return anything, modify board in-place instead.
  */
 
-class Direction {
+class Index {
     x: number;
     y: number;
     constructor(x: number, y: number){
@@ -11,24 +11,24 @@ class Direction {
     }
 }
 
-class Adjacent{
+class Direction{
     private directions = [
-        new Direction(0, 1),
-        new Direction(0, -1),
-        new Direction(1, 0),
-        new Direction(-1,0),
-        new Direction(1, -1),
-        new Direction(1, 1),
-        new Direction(-1, 1),
-        new Direction(-1, -1),
+        new Index(0, 1),
+        new Index(0, -1),
+        new Index(1, 0),
+        new Index(-1,0),
+        new Index(1, -1),
+        new Index(1, 1),
+        new Index(-1, 1),
+        new Index(-1, -1),
     ];
-    private maxIndex: Direction;
+    private maxIndex: Index;
     
-    constructor(maxDirection: Direction){
-        this.maxIndex = maxDirection;
+    constructor(maxIndex: Index){
+        this.maxIndex = maxIndex;
     }
 
-    private isIn(index: Direction){
+    private isIn(index: Index){
         const x = index.x;
         const y = index.y;
         
@@ -47,26 +47,26 @@ class Adjacent{
         return this.directions.filter(d => {
             const newX = d.x + x;
             const newY = d.y + y;
-            const newIndex = new Direction(newX, newY);
+            const newIndex = new Index(newX, newY);
             return this.isIn(newIndex);
-        }).map(a => new Direction(a.x + x, a.y + y));
+        }).map(a => new Index(a.x + x, a.y + y));
     }
 }
 
 class Board {
-    adjecent: Adjacent;
+    direction: Direction;
     matrix: number[][];
     constructor(matrix:number[][]){
         this.matrix = matrix;
-        this.adjecent = new Adjacent(new Direction(matrix[0].length, matrix.length));
+        this.direction = new Direction(new Index(matrix[0].length, matrix.length));
     }
 
-    public updateState(index: Direction, value: number){
+    public updateState(index: Index, value: number){
         this.matrix[index.y][index.x] = value;
     }
 
-    public getNextState(index: Direction){
-        const adjs = this.adjecent.getAdj(index.x, index.y);
+    public getNextState(index: Index){
+        const adjs = this.direction.getAdj(index.x, index.y);
         if(this.matrix[index.y][index.x]){
             if(this.firstRule(adjs)){
                 return 0;
@@ -87,7 +87,7 @@ class Board {
         
     }
 
-    private firstRule(adjs: Direction[]){
+    private firstRule(adjs: Index[]){
         const lived = adjs.filter(a => !!this.matrix[a.y][a.x]).length;
         if(lived < 2){
             return true;
@@ -95,7 +95,7 @@ class Board {
         return false;
     }
     
-    private secondRule(adjs: Direction[]){
+    private secondRule(adjs: Index[]){
         const lived = adjs.filter(a => !!this.matrix[a.y][a.x]).length;
         if(lived === 2 || lived === 3){
             return true;
@@ -103,7 +103,7 @@ class Board {
         return false;
     }
     
-    private thirdRule(adjs: Direction[]){
+    private thirdRule(adjs: Index[]){
         const live = adjs.filter(a => !!this.matrix[a.y][a.x]).length;
         if(live > 3){
             return true;
@@ -111,7 +111,7 @@ class Board {
         return false;
     }
 
-    private forthRule(adjs: Direction[]){
+    private forthRule(adjs: Index[]){
         const lived = adjs.filter(a => {
             return !!this.matrix[a.y][a.x];
         }).length;
@@ -131,7 +131,7 @@ function gameOfLife(board: number[][]): void {
     const maxY = board.length;
     for(let y = 0; y < maxY; y++){
         for(let x = 0; x<maxX; x++){
-            const index = new Direction(x,y);
+            const index = new Index(x,y);
             const nextState = currentBoard.getNextState(index);
             updatedBoard.updateState(index,nextState);
         }
