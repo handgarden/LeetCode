@@ -41,27 +41,28 @@ class Interval {
 function insert(intervals: number[][], newInterval: number[]): number[][] {
     const ins = intervals.map(i => new Interval(i[0], i[1]));
 
-    let cur: Interval | null = new Interval(newInterval[0], newInterval[1]);
+    let input: Interval | null = new Interval(newInterval[0], newInterval[1]);
     
-    const result = [];
-    for(const elem of ins){
-        if(!cur){
-            result.push(elem);
-            continue;
+    const result = ins.reduce((total, cur) => {
+        if(!input || cur.smaller(input)){
+            return [...total, cur];
         }
-        if(elem.isOverlaped(cur)){
-            cur = elem.merge(cur);
-        }else if(elem.smaller(cur)){
-            result.push(elem);
+        
+        if(cur.isOverlaped(input)){
+            input = cur.merge(input);
+            return total;
         }
-        else{
-            result.push(cur);
-            result.push(elem);
-            cur = null;
+        if(!cur.smaller(input)){
+            const tmp = input;
+            input = null;
+            return [...total, tmp, cur];
         }
-    }
-    if(cur){
-        result.push(cur);
+        
+        return [...total, cur]
+    },[])
+    
+    if(input){
+        result.push(input);
     }
     
     return result.map(r=>r.toArray())
