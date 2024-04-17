@@ -1,65 +1,25 @@
-class Interval {
-    start: number;
-    end: number;
-
-    constructor(start: number, end: number){
-        this.start = start;
-        this.end = end;
-    }
-
-    isOverlaped(inv: Interval){
-        if(inv.start > this.end){
-            return false;
-        }
-        
-        if(inv.end < this.start){
-            return false;
-        }
-        
-        return true;
-    }
-
-    merge(inv: Interval){
-        const newIn = new Interval(Math.min(this.start, inv.start), Math.max(this.end, inv.end));
-        return newIn;
-    }
-
-    equal(inv: Interval){
-        return this.start === inv.start && this.end === inv.end;
-    }
-    
-    bigger(inv: Interval){
-        return this.start > inv.end;
-    }
-
-    toArray(){
-        return [this.start, this.end];
-    }
-    
-}
-
 function insert(intervals: number[][], newInterval: number[]): number[][] {
-    const ins = intervals.map(i => new Interval(i[0], i[1]));
-
-    let input: Interval = new Interval(newInterval[0], newInterval[1]);
-    
-    const result = [];
+    const result:number[][] = [];
     
     let i = 0;
-    for(; i < ins.length; i++){ 
-        const cur = ins[i];
-        if(cur.isOverlaped(input)){
-            input = cur.merge(input);
+    for(; i < intervals.length; i++){ 
+        const cur = intervals[i];
+        if((cur[0] >= newInterval[0] && cur[0] <= newInterval[1]) || (cur[1] >= newInterval[0] && cur[1] <= newInterval[1])){
+            newInterval = [Math.min(cur[0], newInterval[0]), Math.max(cur[1], newInterval[1])];
             continue;
         }
-        if(cur.bigger(input)){
+        if((cur[0] <= newInterval[0] && cur[1] >= newInterval[0]) || (cur[0] >= newInterval[1] && cur[1] <= newInterval[1])){
+            newInterval = [Math.min(cur[0], newInterval[0]), Math.max(cur[1], newInterval[1])];
+            continue;
+        }
+        if(cur[0] > newInterval[1]){
             break;
         }
         result.push(cur);        
     }
     
-    result.push(input);
-    result.push(...ins.slice(i));
+    result.push(newInterval);
+    result.push(...intervals.slice(i));
     
-    return result.map(r=>r.toArray())
+    return result
 };
