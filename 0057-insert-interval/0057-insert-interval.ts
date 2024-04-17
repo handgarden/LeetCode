@@ -28,8 +28,8 @@ class Interval {
         return this.start === inv.start && this.end === inv.end;
     }
     
-    smaller(inv: Interval){
-        return this.end < inv.start;
+    bigger(inv: Interval){
+        return this.start > inv.end;
     }
 
     toArray(){
@@ -41,29 +41,25 @@ class Interval {
 function insert(intervals: number[][], newInterval: number[]): number[][] {
     const ins = intervals.map(i => new Interval(i[0], i[1]));
 
-    let input: Interval | null = new Interval(newInterval[0], newInterval[1]);
+    let input: Interval = new Interval(newInterval[0], newInterval[1]);
     
-    const result = ins.reduce((total, cur) => {
-        if(!input || cur.smaller(input)){
-            return [...total, cur];
-        }
-        
+    const result = [];
+    
+    let i = 0;
+    for(; i < ins.length; i++){ 
+        const cur = ins[i];
         if(cur.isOverlaped(input)){
             input = cur.merge(input);
-            return total;
+            continue;
         }
-        if(!cur.smaller(input)){
-            const tmp = input;
-            input = null;
-            return [...total, tmp, cur];
+        if(cur.bigger(input)){
+            break;
         }
-        
-        return [...total, cur]
-    },[])
-    
-    if(input){
-        result.push(input);
+        result.push(cur);        
     }
+    
+    result.push(input);
+    result.push(...ins.slice(i));
     
     return result.map(r=>r.toArray())
 };
