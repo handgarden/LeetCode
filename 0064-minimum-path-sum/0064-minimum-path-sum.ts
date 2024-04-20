@@ -16,11 +16,7 @@ class GridDP {
     }
 
     getPrevVal(prevIndexes: number[][]){
-        let val = this.gridDP[prevIndexes[0][0]][prevIndexes[0][1]];
-        for(let i = 1; i<prevIndexes.length; i++){
-            val = Math.min(val, this.gridDP[prevIndexes[i][0]][prevIndexes[i][1]]);
-        }
-        return val;
+        
     }
 }
 
@@ -37,8 +33,7 @@ function minPathSum(grid: number[][]): number {
                 continue;
             }
             const curVal = grid[i][j];
-            const prevPath = getPrevPath(i,j);
-            const prevVal = dp.getPrevVal(prevPath);
+            const prevVal = getPrevVal(dp, i,j);
             dp.setVal(i,j, prevVal + curVal);
         }
     }
@@ -47,17 +42,14 @@ function minPathSum(grid: number[][]): number {
     return dp.getVal(maxI, maxJ);
 };
 
-function getPrevPath(i: number, j: number){
-    if(i - 1 < 0 && j - 1 < 0){
-        return [];
-    }
-    const left = [i, j - 1];
-    const up = [i - 1, j];
+function getPrevVal(dp:GridDP, i: number, j: number){
     if(j - 1 < 0){
-        return [up];
+        return dp.getVal(i-1, j);
     }
+    
     if(i - 1 < 0){
-        return [left];
+        return dp.getVal(i, j -1);
     }
-    return [up, left];
+    
+    return Math.min(dp.getVal(i - 1, j), dp.getVal(i,j-1));
 }
