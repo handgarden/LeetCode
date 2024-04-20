@@ -1,23 +1,15 @@
-class Index {
-    readonly i: number;
-    readonly j: number;
-    constructor(i: number, j: number){
-        this.i = i;
-        this.j = j;
-    };
-}
 
 class PathFinder {
-    getPrevPath(index: Index){
-        if(index.i - 1 < 0 && index.j - 1 < 0){
+    getPrevPath(i: number, j: number){
+        if(i - 1 < 0 && j - 1 < 0){
             return [];
         }
-        const left = new Index(index.i, index.j - 1);
-        const up = new Index(index.i - 1, index.j);
-        if(index.j - 1 < 0){
+        const left = [i, j - 1];
+        const up = [i - 1, j];
+        if(j - 1 < 0){
             return [up];
         }
-        if(index.i - 1 < 0){
+        if(i - 1 < 0){
             return [left];
         }
         return [up, left];
@@ -26,24 +18,24 @@ class PathFinder {
 
 class GridDP {
     readonly gridDP = [];
-    constructor(max: Index){
-        for(let i = 0; i<=max.i; i++){
-            this.gridDP.push(new Array(max.j + 1).fill(0))
+    constructor(maxI: number, maxJ: number){
+        for(let i = 0; i<=maxI; i++){
+            this.gridDP.push(new Array(maxJ + 1).fill(0))
         }
     }
 
-    setVal(index: Index, val: number){
-        this.gridDP[index.i][index.j] = val;
+    setVal(i: number, j:number, val: number){
+        this.gridDP[i][j] = val;
     }
 
-    getVal(index: Index){
-        return this.gridDP[index.i][index.j];
+    getVal(i: number, j: number){
+        return this.gridDP[i][j];
     }
 
-    getPrevVal(prevIndexes: Index[]){
-        let val = this.gridDP[prevIndexes[0].i][prevIndexes[0].j];
+    getPrevVal(prevIndexes: number[][]){
+        let val = this.gridDP[prevIndexes[0][0]][prevIndexes[0][1]];
         for(let i = 1; i<prevIndexes.length; i++){
-            val = Math.min(val, this.gridDP[prevIndexes[i].i][prevIndexes[i].j]);
+            val = Math.min(val, this.gridDP[prevIndexes[i][0]][prevIndexes[i][1]]);
         }
         return val;
     }
@@ -51,24 +43,24 @@ class GridDP {
 
 
 function minPathSum(grid: number[][]): number {
-    const maxIndex = new Index(grid.length - 1, grid[0].length - 1);
-    const dp = new GridDP(maxIndex);
+    const maxI = grid.length - 1;
+    const maxJ = grid[0].length - 1;
+    const dp = new GridDP(maxI, maxJ);
     const pathFinder = new PathFinder();
 
-    dp.setVal(new Index(0,0), grid[0][0]);
-    for(let i = 0; i<=maxIndex.i; i++){
-        for(let j = 0; j<=maxIndex.j; j++){
+    dp.setVal(0,0, grid[0][0]);
+    for(let i = 0; i<=maxI; i++){
+        for(let j = 0; j<=maxJ; j++){
             if(i == 0 && j==0){
                 continue;
             }
-            const curIndex = new Index(i,j);
             const curVal = grid[i][j];
-            const prevPath = pathFinder.getPrevPath(curIndex);
+            const prevPath = pathFinder.getPrevPath(i,j);
             const prevVal = dp.getPrevVal(prevPath);
-            dp.setVal(curIndex, prevVal + curVal);
+            dp.setVal(i,j, prevVal + curVal);
         }
     }
     
     
-    return dp.getVal(maxIndex);
+    return dp.getVal(maxI, maxJ);
 };
