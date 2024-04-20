@@ -41,9 +41,6 @@ class GridDP {
     }
 
     getPrevVal(prevIndexes: Index[]){
-        if(!prevIndexes.length){
-            throw new Error('invalid input'); 
-        }
         let val = this.gridDP[prevIndexes[0].i][prevIndexes[0].j];
         for(let i = 1; i<prevIndexes.length; i++){
             val = Math.min(val, this.gridDP[prevIndexes[i].i][prevIndexes[i].j]);
