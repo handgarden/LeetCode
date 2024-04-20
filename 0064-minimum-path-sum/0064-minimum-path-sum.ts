@@ -1,21 +1,4 @@
 
-class PathFinder {
-    getPrevPath(i: number, j: number){
-        if(i - 1 < 0 && j - 1 < 0){
-            return [];
-        }
-        const left = [i, j - 1];
-        const up = [i - 1, j];
-        if(j - 1 < 0){
-            return [up];
-        }
-        if(i - 1 < 0){
-            return [left];
-        }
-        return [up, left];
-    }
-}
-
 class GridDP {
     readonly gridDP = [];
     constructor(maxI: number, maxJ: number){
@@ -46,7 +29,6 @@ function minPathSum(grid: number[][]): number {
     const maxI = grid.length - 1;
     const maxJ = grid[0].length - 1;
     const dp = new GridDP(maxI, maxJ);
-    const pathFinder = new PathFinder();
 
     dp.setVal(0,0, grid[0][0]);
     for(let i = 0; i<=maxI; i++){
@@ -55,7 +37,7 @@ function minPathSum(grid: number[][]): number {
                 continue;
             }
             const curVal = grid[i][j];
-            const prevPath = pathFinder.getPrevPath(i,j);
+            const prevPath = getPrevPath(i,j);
             const prevVal = dp.getPrevVal(prevPath);
             dp.setVal(i,j, prevVal + curVal);
         }
@@ -64,3 +46,18 @@ function minPathSum(grid: number[][]): number {
     
     return dp.getVal(maxI, maxJ);
 };
+
+function getPrevPath(i: number, j: number){
+    if(i - 1 < 0 && j - 1 < 0){
+        return [];
+    }
+    const left = [i, j - 1];
+    const up = [i - 1, j];
+    if(j - 1 < 0){
+        return [up];
+    }
+    if(i - 1 < 0){
+        return [left];
+    }
+    return [up, left];
+}
