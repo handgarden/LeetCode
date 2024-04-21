@@ -9,12 +9,10 @@ function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
     dp[0][0] = obstacleGrid[0][0] ? 0 : 1;
     for(let i = 0; i<=maxI; i++){
         for(let j = 0; j<=maxJ; j++){
-            if(i == 0 && j==0){
+            if((i == 0 && j==0)||!!obstacleGrid[i][j]){
                 continue;
             }
-            if(!!obstacleGrid[i][j]){
-                continue;
-            }
+          
             let curVal = 0;
             if(j-1 >= 0){
                 curVal+= dp[i][j-1];            
