@@ -1,39 +1,14 @@
-class Index{
-    i: number;
-    j: number;
-    constructor(i: number, j: number){
-        this.i = i;
-        this.j = j;
+function getPrevIndex(i: number, j: number){
+    const prev:number[][] = [];
+    if(j-1 >= 0){
+        prev.push([i,j-1]);
     }
 
-    getLeft(){
-        if(this.j-1 < 0){
-            return null;
-        }
-        return new Index(this.i, this.j - 1);
+    if(i-1 >= 0){
+        prev.push([i-1, j]);
     }
 
-    getUp(){
-        if(this.i - 1 < 0){
-            return null;
-        }
-        return new Index(this.i-1, this.j);
-    }
-
-    getPrevIndex(){
-        const prev:Index[] = [];
-        const left = this.getLeft();
-        if(left){
-            prev.push(left);
-        }
-        
-        const up = this.getUp();
-        if(up){
-            prev.push(up);
-        }
-        
-        return prev;
-    }
+    return prev;
 }
 
 function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
@@ -50,19 +25,18 @@ function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
             if(i == 0 && j==0){
                 continue;
             }
-            const curIndex = new Index(i,j);
             if(!!obstacleGrid[i][j]){
                 continue;
             }
-            const prevIndex = curIndex.getPrevIndex();
+            const prevIndex = getPrevIndex(i,j);
             let curVal = 0;
-            prevIndex.forEach(p => {
-                if(obstacleGrid[p.i][p.j]){
+            prevIndex.forEach(([i,j]) => {
+                if(obstacleGrid[i][j]){
                     return;
                 }
-                curVal += dp[p.i][p.j];
+                curVal += dp[i][j];
             })
-            dp[curIndex.i][curIndex.j] = curVal;
+            dp[i][j] = curVal;
         }
     }
     return dp[maxI][maxJ];
