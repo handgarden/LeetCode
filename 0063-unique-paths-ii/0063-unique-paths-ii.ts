@@ -36,10 +36,6 @@ class Index{
     }
 }
 
-function isObstacle(grid: number[][], index: Index){
-    return !!grid[index.i][index.j];
-}
-
 function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
     const dp: number[][] = [];
     const maxIndex = new Index(obstacleGrid.length - 1, obstacleGrid[0].length - 1);
@@ -54,13 +50,13 @@ function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
                 continue;
             }
             const curIndex = new Index(i,j);
-            if(isObstacle(obstacleGrid, curIndex)){
+            if(!!obstacleGrid[i][j]){
                 continue;
             }
             const prevIndex = curIndex.getPrevIndex();
             let curVal = 0;
             prevIndex.forEach(p => {
-                if(isObstacle(obstacleGrid, p)){
+                if(obstacleGrid[p.i][p.j]){
                     return;
                 }
                 curVal += dp[p.i][p.j];
