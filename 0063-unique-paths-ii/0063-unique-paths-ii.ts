@@ -1,16 +1,3 @@
-function getPrevIndex(i: number, j: number){
-    const prev:number[][] = [];
-    if(j-1 >= 0){
-        prev.push([i,j-1]);
-    }
-
-    if(i-1 >= 0){
-        prev.push([i-1, j]);
-    }
-
-    return prev;
-}
-
 function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
     const dp: number[][] = [];
     const maxI = obstacleGrid.length - 1;
@@ -28,14 +15,13 @@ function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
             if(!!obstacleGrid[i][j]){
                 continue;
             }
-            const prevIndex = getPrevIndex(i,j);
             let curVal = 0;
-            prevIndex.forEach(([i,j]) => {
-                if(obstacleGrid[i][j]){
-                    return;
-                }
-                curVal += dp[i][j];
-            })
+            if(j-1 >= 0){
+                curVal+= dp[i][j-1];            
+            }
+            if(i-1 >= 0){
+                curVal+=dp[i-1][j];
+            }
             dp[i][j] = curVal;
         }
     }
