@@ -38,14 +38,15 @@ class Index{
 
 function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
     const dp: number[][] = [];
-    const maxIndex = new Index(obstacleGrid.length - 1, obstacleGrid[0].length - 1);
-    for(let i = 0; i<=maxIndex.i; i++){
-        dp.push(new Array(maxIndex.j+1).fill(0));
+    const maxI = obstacleGrid.length - 1;
+    const maxJ = obstacleGrid[0].length - 1;
+    for(let i = 0; i <= maxI; i++){
+        dp.push(new Array(maxJ + 1).fill(0));
     }
     
     dp[0][0] = obstacleGrid[0][0] ? 0 : 1;
-    for(let i = 0; i<=maxIndex.i; i++){
-        for(let j = 0; j<=maxIndex.j;j++){
+    for(let i = 0; i<=maxI; i++){
+        for(let j = 0; j<=maxJ; j++){
             if(i == 0 && j==0){
                 continue;
             }
@@ -64,5 +65,5 @@ function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
             dp[curIndex.i][curIndex.j] = curVal;
         }
     }
-    return dp[maxIndex.i][maxIndex.j]
+    return dp[maxI][maxJ];
 };
