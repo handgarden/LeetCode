@@ -1,5 +1,4 @@
 function binarySearch(matrix: number[], target: number){
-    console.log(matrix, target)
     if(matrix.length == 1){
         return matrix[0] === target;
     }
