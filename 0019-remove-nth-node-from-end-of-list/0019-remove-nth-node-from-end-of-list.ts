@@ -12,13 +12,13 @@
 
 function removeNthFromEnd(head: ListNode | null, n: number): ListNode | null {
     let cur = head;
-    let length = 0;
+    let i = 0;
     while(cur){
-        length++;
+        i++;
         cur = cur.next;
     }
-    const find = length - n - 1;
-    let i = 0;
+    const find = i - n - 1;
+    i = 0;
     if(find < i){
         return head.next;
     }
