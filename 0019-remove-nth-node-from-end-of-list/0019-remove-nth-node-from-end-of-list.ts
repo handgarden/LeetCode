@@ -19,7 +19,6 @@ function removeNthFromEnd(head: ListNode | null, n: number): ListNode | null {
     }
     const find = length - n - 1;
     let i = 0;
-    console.log(find, i);
     if(find < i){
         return head.next;
     }
