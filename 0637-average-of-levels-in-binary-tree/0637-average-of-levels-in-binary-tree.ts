@@ -12,34 +12,42 @@
  * }
  */
 
+function levelSearch(que: TreeNode[]){
+    const levelQue = [];
+    let total = 0;
+    const count = que.length;
+    
+    while(que.length){
+        const curNode = que.pop();
+        
+        total += curNode.val;
+        
+        const left = curNode.left;
+        const right = curNode.right;
+        
+        if(left){
+            levelQue.push(left);
+        }
+        if(right){
+            levelQue.push(right);
+        }
+    }
+
+    return {
+        levelQue,
+        avg: total / count
+    }
+}
+
 
 function averageOfLevels(root: TreeNode | null): number[] {
     let que: TreeNode[] = [];
     const result:number[] = [];
     que.push(root);
-    while(true){
-        const levelQue = [];
-        let total = 0;
-        const count = que.length;
-        while(que.length){
-            const curNode = que.pop();
-            total += curNode.val;
-            const left = curNode.left;
-            const right = curNode.right;
-            if(left){
-                levelQue.push(left);
-            }
-            if(right){
-                levelQue.push(right);
-            }
-        }
-        if(count){
-            result.push(total / count);
-        }
-        if(!levelQue.length){
-            break;
-        }
+    while(que.length){
+        const {levelQue, avg} = levelSearch(que);
         que = levelQue;
+        result.push(avg);
     }
     return result;
 };
