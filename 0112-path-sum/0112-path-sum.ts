@@ -23,7 +23,6 @@ function sum(target: number, total: number, curNode: TreeNode){
         return true;        
     }    
     
-    
     return sum(target, curVal, curNode.left) || sum(target, curVal, curNode.right); 
 }
 
