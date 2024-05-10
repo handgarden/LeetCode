@@ -46,8 +46,8 @@ function averageOfLevels(root: TreeNode | null): number[] {
     que.push(root);
     while(que.length){
         const {levelQue, avg} = levelSearch(que);
-        que = levelQue;
         result.push(avg);
+        que = levelQue;
     }
     return result;
 };
