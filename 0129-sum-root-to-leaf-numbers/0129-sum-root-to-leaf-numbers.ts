@@ -29,6 +29,5 @@ function midSearch(aggregate: string[], prev:string, node: TreeNode){
 function sumNumbers(root: TreeNode | null): number {
     const aggregate: string[] = [];
     midSearch(aggregate, '', root);
-    console.log(aggregate);
     return aggregate.reduce((total, val) => total+Number(val), 0);
 };
