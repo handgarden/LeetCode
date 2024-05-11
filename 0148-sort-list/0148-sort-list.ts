@@ -28,7 +28,6 @@ function sortList(head: ListNode | null): ListNode | null {
 };
 
 function mergeSort(list: ListNode[]){
-    console.log(list);
     if(list.length < 2){
         return list;
     }
